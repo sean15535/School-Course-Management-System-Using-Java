@@ -9,25 +9,51 @@ public class CourseGUI extends JFrame {
 
     public CourseGUI() {
         setTitle(SCHOOL_NAME + " - Course Management System");
-        setSize(500, 400);
+        setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
 
+        // Create tabs for different sections
+        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setFont(new Font("Arial", Font.BOLD, 14));
+        
+        // Course Management Tab
+        JPanel coursePanel = new JPanel();
+        coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
+        coursePanel.add(new JLabel("Course Management", SwingConstants.CENTER));
         JButton addCourseBtn = new JButton("Add Course");
-        JButton addStudentBtn = new JButton("Add Student");
+        addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        coursePanel.add(addCourseBtn);
         JButton enrollBtn = new JButton("Enroll Student");
+        enrollBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        coursePanel.add(enrollBtn);
+        tabbedPane.addTab("Course Management", coursePanel);
+
+        // Student Management Tab
+        JPanel studentPanel = new JPanel();
+        studentPanel.setLayout(new BoxLayout(studentPanel, BoxLayout.Y_AXIS));
+        studentPanel.add(new JLabel("Student Management", SwingConstants.CENTER));
+        JButton addStudentBtn = new JButton("Add Student");
+        addStudentBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        studentPanel.add(addStudentBtn);
+        tabbedPane.addTab("Student Management", studentPanel);
+
+        // Grade Management Tab
+        JPanel gradePanel = new JPanel();
+        gradePanel.setLayout(new BoxLayout(gradePanel, BoxLayout.Y_AXIS));
+        gradePanel.add(new JLabel("Grade Management", SwingConstants.CENTER));
         JButton assignGradeBtn = new JButton("Assign Grade");
+        assignGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        gradePanel.add(assignGradeBtn);
         JButton calcGradeBtn = new JButton("Calculate Grade");
+        calcGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        gradePanel.add(calcGradeBtn);
+        tabbedPane.addTab("Grade Management", gradePanel);
 
-        JPanel panel = new JPanel(new GridLayout(6, 1, 10, 10));
-        panel.add(new JLabel("Welcome to " + SCHOOL_NAME, SwingConstants.CENTER));
-        panel.add(addCourseBtn);
-        panel.add(addStudentBtn);
-        panel.add(enrollBtn);
-        panel.add(assignGradeBtn);
-        panel.add(calcGradeBtn);
-        add(panel);
+        add(tabbedPane, BorderLayout.CENTER);
 
+        // Add action listeners
         addCourseBtn.addActionListener(e -> showAddCourseDialog());
         addStudentBtn.addActionListener(e -> showAddStudentDialog());
         enrollBtn.addActionListener(e -> showEnrollDialog());
@@ -44,7 +70,9 @@ public class CourseGUI extends JFrame {
 
         Object[] fields = {
             "Username:", username,
-            "Password:", password
+            "Password:", password,
+            "Remember me", new JCheckBox(),
+            "Forgot password?", new JButton()
         };
 
         int result = JOptionPane.showConfirmDialog(null, fields, "Login", JOptionPane.OK_CANCEL_OPTION);
@@ -52,7 +80,7 @@ public class CourseGUI extends JFrame {
             if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
                 new CourseGUI();
             } else {
-                JOptionPane.showMessageDialog(null, "Invalid credentials. Exiting.");
+                JOptionPane.showMessageDialog(null, "Invalid credentials. Exiting.", "Error", JOptionPane.ERROR_MESSAGE);
                 System.exit(0);
             }
         } else {
