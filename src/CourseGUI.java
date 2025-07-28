@@ -21,8 +21,8 @@ public class CourseGUI extends JFrame {
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Add school logo
-        ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo"); // Replace with actual logo path
+        // Add school logo with original size
+        ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo"); // Use original size
         JLabel logoLabel = new JLabel(logo);
         headerPanel.add(logoLabel, BorderLayout.NORTH);
 
@@ -51,7 +51,7 @@ public class CourseGUI extends JFrame {
         addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addCourseBtn.setBackground(new Color(101, 31, 118)); // Purple color
         addCourseBtn.setForeground(Color.WHITE);
-        addCourseBtn.setIcon(createImageIcon("plus.png", "Add Course", 16, 16)); // Add icon with size 16x16
+        addCourseBtn.setIcon(createImageIcon("plus.png", "Add Course", 16, 16)); // Icon size 16x16
         addCourseBtn.setToolTipText("Add a new course to the system");
         addCourseBtn.setIconTextGap(10);
         addCourseBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
@@ -61,7 +61,7 @@ public class CourseGUI extends JFrame {
         enrollBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         enrollBtn.setBackground(new Color(101, 31, 118)); // Purple color
         enrollBtn.setForeground(Color.WHITE);
-        enrollBtn.setIcon(createImageIcon("user.png", "Enroll Student", 16, 16)); // Add icon with size 16x16
+        enrollBtn.setIcon(createImageIcon("user.png", "Enroll Student", 16, 16)); // Icon size 16x16
         enrollBtn.setToolTipText("Enroll a student in a course");
         enrollBtn.setIconTextGap(10);
         enrollBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
@@ -82,7 +82,7 @@ public class CourseGUI extends JFrame {
         addStudentBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addStudentBtn.setBackground(new Color(101, 31, 118)); // Purple color
         addStudentBtn.setForeground(Color.WHITE);
-        addStudentBtn.setIcon(createImageIcon("user-plus.png", "Add Student", 16, 16)); // Add icon with size 16x16
+        addStudentBtn.setIcon(createImageIcon("user-plus.png", "Add Student", 16, 16)); // Icon size 16x16
         addStudentBtn.setToolTipText("Add a new student to the system");
         addStudentBtn.setIconTextGap(10);
         addStudentBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
@@ -103,7 +103,7 @@ public class CourseGUI extends JFrame {
         assignGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         assignGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
         assignGradeBtn.setForeground(Color.WHITE);
-        assignGradeBtn.setIcon(createImageIcon("graduation.png", "Assign Grade", 16, 16)); // Add icon with size 16x16
+        assignGradeBtn.setIcon(createImageIcon("graduation.png", "Assign Grade", 16, 16)); // Icon size 16x16
         assignGradeBtn.setToolTipText("Assign a grade to a student for a course");
         assignGradeBtn.setIconTextGap(10);
         assignGradeBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
@@ -113,7 +113,7 @@ public class CourseGUI extends JFrame {
         calcGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         calcGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
         calcGradeBtn.setForeground(Color.WHITE);
-        calcGradeBtn.setIcon(createImageIcon("calculator.png", "Calculate Grade", 16, 16)); // Add icon with size 16x16
+        calcGradeBtn.setIcon(createImageIcon("calculator.png", "Calculate Grade", 16, 16)); // Icon size 16x16
         calcGradeBtn.setToolTipText("Calculate a student's overall grade");
         calcGradeBtn.setIconTextGap(10);
         calcGradeBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
@@ -160,7 +160,7 @@ public class CourseGUI extends JFrame {
         loginPanel.setBackground(new Color(10, 10, 40)); // Dark blue background
         loginPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
-        // Add logo to login panel
+        // Add logo to login panel with original size
         ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo"); // Use original size
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
