@@ -14,10 +14,23 @@ public class CourseGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        // Create a panel for the header
+        JPanel headerPanel = new JPanel();
+        headerPanel.setLayout(new BorderLayout());
+        headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
         // Add school logo
         ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo"); // Replace with actual logo path
         JLabel logoLabel = new JLabel(logo);
-        add(logoLabel, BorderLayout.NORTH);
+        headerPanel.add(logoLabel, BorderLayout.NORTH);
+
+        // Add text under the logo
+        JLabel appTitle = new JLabel("University of the People Course Management App");
+        appTitle.setFont(new Font("Arial", Font.BOLD, 14));
+        appTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        headerPanel.add(appTitle, BorderLayout.CENTER);
+
+        add(headerPanel, BorderLayout.NORTH);
 
         // Create tabs for different sections
         JTabbedPane tabbedPane = new JTabbedPane();
@@ -38,6 +51,8 @@ public class CourseGUI extends JFrame {
         addCourseBtn.setForeground(Color.WHITE);
         addCourseBtn.setIcon(createImageIcon("plus.png", "Add Course")); // Add icon
         addCourseBtn.setToolTipText("Add a new course to the system");
+        addCourseBtn.setIconTextGap(10);
+        addCourseBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
         coursePanel.add(addCourseBtn);
 
         JButton enrollBtn = new JButton("Enroll Student");
@@ -46,6 +61,8 @@ public class CourseGUI extends JFrame {
         enrollBtn.setForeground(Color.WHITE);
         enrollBtn.setIcon(createImageIcon("user.png", "Enroll Student")); // Add icon
         enrollBtn.setToolTipText("Enroll a student in a course");
+        enrollBtn.setIconTextGap(10);
+        enrollBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
         coursePanel.add(enrollBtn);
 
         tabbedPane.addTab("Course Management", coursePanel);
@@ -65,6 +82,8 @@ public class CourseGUI extends JFrame {
         addStudentBtn.setForeground(Color.WHITE);
         addStudentBtn.setIcon(createImageIcon("user-plus.png", "Add Student")); // Add icon
         addStudentBtn.setToolTipText("Add a new student to the system");
+        addStudentBtn.setIconTextGap(10);
+        addStudentBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
         studentPanel.add(addStudentBtn);
 
         tabbedPane.addTab("Student Management", studentPanel);
@@ -84,6 +103,8 @@ public class CourseGUI extends JFrame {
         assignGradeBtn.setForeground(Color.WHITE);
         assignGradeBtn.setIcon(createImageIcon("graduation.png", "Assign Grade")); // Add icon
         assignGradeBtn.setToolTipText("Assign a grade to a student for a course");
+        assignGradeBtn.setIconTextGap(10);
+        assignGradeBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
         gradePanel.add(assignGradeBtn);
 
         JButton calcGradeBtn = new JButton("Calculate Grade");
@@ -92,6 +113,8 @@ public class CourseGUI extends JFrame {
         calcGradeBtn.setForeground(Color.WHITE);
         calcGradeBtn.setIcon(createImageIcon("calculator.png", "Calculate Grade")); // Add icon
         calcGradeBtn.setToolTipText("Calculate a student's overall grade");
+        calcGradeBtn.setIconTextGap(10);
+        calcGradeBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
         gradePanel.add(calcGradeBtn);
 
         tabbedPane.addTab("Grade Management", gradePanel);
