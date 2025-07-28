@@ -157,7 +157,7 @@ public class CourseGUI extends JFrame {
         // Create login panel with improved UI
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridBagLayout());
-        loginPanel.setBackground(new Color(10, 10, 40)); // Dark blue background
+        loginPanel.setBackground(Color.WHITE); // Set background to white
         loginPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
         // Add logo to login panel with original size
@@ -169,21 +169,21 @@ public class CourseGUI extends JFrame {
         // Add login fields
         JTextField username = new JTextFieldWithPlaceholder("USER NAME");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
-        username.setBackground(new Color(20, 20, 70));
-        username.setForeground(Color.WHITE);
-        username.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        username.setBackground(Color.WHITE);
+        username.setForeground(Color.BLACK);
+        username.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         username.setPreferredSize(new Dimension(300, 50));
 
         JPasswordField password = new JPasswordFieldWithPlaceholder("PASSWORD");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
-        password.setBackground(new Color(20, 20, 70));
-        password.setForeground(Color.WHITE);
-        password.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        password.setBackground(Color.WHITE);
+        password.setForeground(Color.BLACK);
+        password.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
         password.setPreferredSize(new Dimension(300, 50));
 
         // Add "Forgot password?" link
         JLabel forgotPassword = new JLabel("Forgot password ?");
-        forgotPassword.setForeground(new Color(150, 150, 255));
+        forgotPassword.setForeground(Color.BLUE);
         forgotPassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         forgotPassword.setHorizontalAlignment(SwingConstants.CENTER);
         forgotPassword.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
@@ -191,7 +191,7 @@ public class CourseGUI extends JFrame {
         // Add login button
         JButton loginButton = new JButton("LOG IN");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
-        loginButton.setBackground(new Color(255, 0, 128)); // Pink color
+        loginButton.setBackground(new Color(101, 31, 118)); // Purple color
         loginButton.setForeground(Color.WHITE);
         loginButton.setBorderPainted(false);
         loginButton.setFocusPainted(false);
@@ -233,7 +233,7 @@ public class CourseGUI extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ("admin".equals(username.getText()) && "admin".equals(password.getText())) {
+                if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
                     loginDialog.dispose(); // Close the login dialog
                     new CourseGUI(); // Show the main application window
                 } else {
