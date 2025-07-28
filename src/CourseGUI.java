@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CourseGUI extends JFrame {
-    private static final String SCHOOL_NAME = "FutureTech University";
+    private static final String SCHOOL_NAME = "University of the People";
     private static List<Student> students = new ArrayList<>();
 
     public CourseGUI() {
@@ -14,19 +14,28 @@ public class CourseGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
+        // Add school logo
+        ImageIcon logo = new ImageIcon("uopeople_logo.png"); // Replace with actual logo path
+        JLabel logoLabel = new JLabel(logo);
+        add(logoLabel, BorderLayout.NORTH);
+
         // Create tabs for different sections
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(new Font("Arial", Font.BOLD, 14));
-        
+
         // Course Management Tab
         JPanel coursePanel = new JPanel();
         coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
         coursePanel.add(new JLabel("Course Management", SwingConstants.CENTER));
         JButton addCourseBtn = new JButton("Add Course");
         addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        addCourseBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        addCourseBtn.setForeground(Color.WHITE);
         coursePanel.add(addCourseBtn);
         JButton enrollBtn = new JButton("Enroll Student");
         enrollBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        enrollBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        enrollBtn.setForeground(Color.WHITE);
         coursePanel.add(enrollBtn);
         tabbedPane.addTab("Course Management", coursePanel);
 
@@ -36,6 +45,8 @@ public class CourseGUI extends JFrame {
         studentPanel.add(new JLabel("Student Management", SwingConstants.CENTER));
         JButton addStudentBtn = new JButton("Add Student");
         addStudentBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        addStudentBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        addStudentBtn.setForeground(Color.WHITE);
         studentPanel.add(addStudentBtn);
         tabbedPane.addTab("Student Management", studentPanel);
 
@@ -45,9 +56,13 @@ public class CourseGUI extends JFrame {
         gradePanel.add(new JLabel("Grade Management", SwingConstants.CENTER));
         JButton assignGradeBtn = new JButton("Assign Grade");
         assignGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        assignGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        assignGradeBtn.setForeground(Color.WHITE);
         gradePanel.add(assignGradeBtn);
         JButton calcGradeBtn = new JButton("Calculate Grade");
         calcGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
+        calcGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        calcGradeBtn.setForeground(Color.WHITE);
         gradePanel.add(calcGradeBtn);
         tabbedPane.addTab("Grade Management", gradePanel);
 
