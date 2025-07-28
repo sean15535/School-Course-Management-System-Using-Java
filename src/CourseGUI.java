@@ -129,16 +129,18 @@ public class CourseGUI extends JFrame {
         enrollBtn.addActionListener(e -> showEnrollDialog());
         assignGradeBtn.addActionListener(e -> showAssignGradeDialog());
         calcGradeBtn.addActionListener(e -> showCalculateGradeDialog());
-
-        setVisible(true);
     }
 
     // Method to create image icons with error handling and custom size
     protected ImageIcon createImageIcon(String path, String description, int width, int height) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
-            Image image = new ImageIcon(imgURL).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(image, description);
+            if (width == 0 || height == 0) { // Use original size if width or height is 0
+                return new ImageIcon(imgURL, description);
+            } else {
+                Image image = new ImageIcon(imgURL).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+                return new ImageIcon(image, description);
+            }
         } else {
             System.err.println("Couldn't find file: " + path);
             return null;
@@ -147,7 +149,7 @@ public class CourseGUI extends JFrame {
 
     // Overloaded method for createImageIcon without custom size
     protected ImageIcon createImageIcon(String path, String description) {
-        return createImageIcon(path, description, 16, 16); // Default size 16x16
+        return createImageIcon(path, description, 0, 0); // Use original size
     }
 
     // ---- Login screen ----
@@ -159,7 +161,7 @@ public class CourseGUI extends JFrame {
         loginPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
 
         // Add logo to login panel
-        ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo", 100, 100);
+        ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo"); // Use original size
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 40, 0));
@@ -170,19 +172,21 @@ public class CourseGUI extends JFrame {
         username.setBackground(new Color(20, 20, 70));
         username.setForeground(Color.WHITE);
         username.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        username.setPreferredSize(new Dimension(300, 50));
 
         JPasswordField password = new JPasswordFieldWithPlaceholder("PASSWORD");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setBackground(new Color(20, 20, 70));
         password.setForeground(Color.WHITE);
         password.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        password.setPreferredSize(new Dimension(300, 50));
 
         // Add "Forgot password?" link
         JLabel forgotPassword = new JLabel("Forgot password ?");
         forgotPassword.setForeground(new Color(150, 150, 255));
         forgotPassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         forgotPassword.setHorizontalAlignment(SwingConstants.CENTER);
-        forgotPassword.setBorder(BorderFactory.createEmptyBorder(20, 0, 30, 0));
+        forgotPassword.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
 
         // Add login button
         JButton loginButton = new JButton("LOG IN");
@@ -191,7 +195,7 @@ public class CourseGUI extends JFrame {
         loginButton.setForeground(Color.WHITE);
         loginButton.setBorderPainted(false);
         loginButton.setFocusPainted(false);
-        loginButton.setPreferredSize(new Dimension(400, 50));
+        loginButton.setPreferredSize(new Dimension(300, 50));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Set up grid bag constraints
@@ -199,15 +203,23 @@ public class CourseGUI extends JFrame {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridy = 0;
         gbc.gridx = 0;
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.fill = GridBagConstraints.NONE;
 
         // Add components to login panel
         loginPanel.add(logoLabel, gbc);
+
+        gbc.gridy = 1;
         loginPanel.add(username, gbc);
+
+        gbc.gridy = 2;
         loginPanel.add(password, gbc);
+
+        gbc.gridy = 3;
         loginPanel.add(forgotPassword, gbc);
+
+        gbc.gridy = 4;
         loginPanel.add(loginButton, gbc);
 
         // Create frame for login dialog
@@ -221,9 +233,9 @@ public class CourseGUI extends JFrame {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
-                    loginDialog.dispose();
-                    new CourseGUI();
+                if ("admin".equals(username.getText()) && "admin".equals(password.getText())) {
+                    loginDialog.dispose(); // Close the login dialog
+                    new CourseGUI(); // Show the main application window
                 } else {
                     JOptionPane.showMessageDialog(
                         loginDialog, 
