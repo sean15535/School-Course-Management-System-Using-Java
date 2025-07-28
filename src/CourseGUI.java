@@ -15,7 +15,7 @@ public class CourseGUI extends JFrame {
         setLayout(new BorderLayout());
 
         // Add school logo
-        ImageIcon logo = new ImageIcon("uopeople_logo.png"); // Replace with actual logo path
+        ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo"); // Replace with actual logo path
         JLabel logoLabel = new JLabel(logo);
         add(logoLabel, BorderLayout.NORTH);
 
@@ -36,7 +36,7 @@ public class CourseGUI extends JFrame {
         addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addCourseBtn.setBackground(new Color(101, 31, 118)); // Purple color
         addCourseBtn.setForeground(Color.WHITE);
-        addCourseBtn.setIcon(new ImageIcon(createIcon("plus"))); // Add icon
+        addCourseBtn.setIcon(createImageIcon("plus.png", "Add Course")); // Add icon
         addCourseBtn.setToolTipText("Add a new course to the system");
         coursePanel.add(addCourseBtn);
 
@@ -44,7 +44,7 @@ public class CourseGUI extends JFrame {
         enrollBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         enrollBtn.setBackground(new Color(101, 31, 118)); // Purple color
         enrollBtn.setForeground(Color.WHITE);
-        enrollBtn.setIcon(new ImageIcon(createIcon("user"))); // Add icon
+        enrollBtn.setIcon(createImageIcon("user.png", "Enroll Student")); // Add icon
         enrollBtn.setToolTipText("Enroll a student in a course");
         coursePanel.add(enrollBtn);
 
@@ -63,7 +63,7 @@ public class CourseGUI extends JFrame {
         addStudentBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addStudentBtn.setBackground(new Color(101, 31, 118)); // Purple color
         addStudentBtn.setForeground(Color.WHITE);
-        addStudentBtn.setIcon(new ImageIcon(createIcon("user-plus"))); // Add icon
+        addStudentBtn.setIcon(createImageIcon("user-plus.png", "Add Student")); // Add icon
         addStudentBtn.setToolTipText("Add a new student to the system");
         studentPanel.add(addStudentBtn);
 
@@ -82,7 +82,7 @@ public class CourseGUI extends JFrame {
         assignGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         assignGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
         assignGradeBtn.setForeground(Color.WHITE);
-        assignGradeBtn.setIcon(new ImageIcon(createIcon("graduation"))); // Add icon
+        assignGradeBtn.setIcon(createImageIcon("graduation.png", "Assign Grade")); // Add icon
         assignGradeBtn.setToolTipText("Assign a grade to a student for a course");
         gradePanel.add(assignGradeBtn);
 
@@ -90,7 +90,7 @@ public class CourseGUI extends JFrame {
         calcGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         calcGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
         calcGradeBtn.setForeground(Color.WHITE);
-        calcGradeBtn.setIcon(new ImageIcon(createIcon("calculator"))); // Add icon
+        calcGradeBtn.setIcon(createImageIcon("calculator.png", "Calculate Grade")); // Add icon
         calcGradeBtn.setToolTipText("Calculate a student's overall grade");
         gradePanel.add(calcGradeBtn);
 
@@ -108,22 +108,14 @@ public class CourseGUI extends JFrame {
         setVisible(true);
     }
 
-    // Method to create icons (replace with actual icon paths)
-    private Image createIcon(String iconType) {
-        // This is a placeholder - replace with actual icon loading
-        switch (iconType) {
-            case "plus":
-                return new ImageIcon(getClass().getResource("/icons/plus.png")).getImage();
-            case "user":
-                return new ImageIcon(getClass().getResource("/icons/user.png")).getImage();
-            case "user-plus":
-                return new ImageIcon(getClass().getResource("/icons/user-plus.png")).getImage();
-            case "graduation":
-                return new ImageIcon(getClass().getResource("/icons/graduation.png")).getImage();
-            case "calculator":
-                return new ImageIcon(getClass().getResource("/icons/calculator.png")).getImage();
-            default:
-                return new ImageIcon(getClass().getResource("/icons/default.png")).getImage();
+    // Method to create image icons with error handling
+    protected ImageIcon createImageIcon(String path, String description) {
+        java.net.URL imgURL = getClass().getResource(path);
+        if (imgURL != null) {
+            return new ImageIcon(imgURL, description);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
         }
     }
 
