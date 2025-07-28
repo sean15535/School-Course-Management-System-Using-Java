@@ -33,7 +33,7 @@ public class CourseGUI extends JFrame {
         coursePanel.add(courseTitle);
 
         JButton addCourseBtn = new JButton("Add Course");
-        addCourseBtn.setFont(new(" FontArial", Font.PLAIN, 14));
+        addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addCourseBtn.setBackground(new Color(101, 31, 118)); // Purple color
         addCourseBtn.setForeground(Color.WHITE);
         addCourseBtn.setIcon(new ImageIcon(createIcon("plus"))); // Add icon
@@ -214,4 +214,54 @@ public class CourseGUI extends JFrame {
                 double grade = Double.parseDouble(input);
                 CourseManagement.assignGrade(student, course, grade);
                 JOptionPane.showMessageDialog(this, "Grade assigned.");
-            } catch
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Invalid grade input.");
+            }
+        }
+    }
+
+    private void showCalculateGradeDialog() {
+        Student student = selectStudent();
+        if (student != null) {
+            double grade = CourseManagement.calculateOverallGrade(student);
+            JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
+        }
+    }
+
+    private Student selectStudent() {
+        if (students.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No students available.");
+            return null;
+        }
+
+        String[] options = students.stream().map(Student::toString).toArray(String[]::new);
+        String selected = (String) JOptionPane.showInputDialog(this, "Select Student:", "Student Selection",
+                JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        if (selected != null) {
+            String id = selected.split(":")[0];
+            return students.stream().filter(s -> s.getId().equals(id)).findFirst().orElse(null);
+        }
+        return null;
+    }
+
+    private Course selectCourse() {
+        List<Course> courses = CourseManagement.getCourses();
+        if (courses.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No courses available.");
+            return null;
+        }
+
+        String[] options = courses.stream().map(Course::toString).toArray(String[]::new);
+        String selected = (String) JOptionPane.showInputDialog(this, "Select Course:", "Course Selection",
+                JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+        if (selected != null) {
+            String code = selected.split(":")[0];
+            return courses.stream().filter(c -> c.getCourseCode().equals(code)).findFirst().orElse(null);
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(CourseGUI::showLogin);
+    }
+}
