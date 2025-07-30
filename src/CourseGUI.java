@@ -167,19 +167,19 @@ public class CourseGUI extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 40, 0));
 
         // Add login fields
-        JTextField username = new JTextFieldWithPlaceholder("USER NAME");
+        JTextFieldWithPlaceholder username = new JTextFieldWithPlaceholder("USER NAME");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setBackground(Color.WHITE);
         username.setForeground(Color.BLACK);
         username.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-        username.setPreferredSize(new Dimension(300, 50));
+        username.setPreferredSize(new Dimension(400, 50)); // Increased width to 400
 
-        JPasswordField password = new JPasswordFieldWithPlaceholder("PASSWORD");
+        JPasswordFieldWithPlaceholder password = new JPasswordFieldWithPlaceholder("PASSWORD");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setBackground(Color.WHITE);
         password.setForeground(Color.BLACK);
         password.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-        password.setPreferredSize(new Dimension(300, 50));
+        password.setPreferredSize(new Dimension(400, 50)); // Increased width to 400
 
         // Add "Forgot password?" link
         JLabel forgotPassword = new JLabel("Forgot password ?");
@@ -195,7 +195,7 @@ public class CourseGUI extends JFrame {
         loginButton.setForeground(Color.WHITE);
         loginButton.setBorderPainted(false);
         loginButton.setFocusPainted(false);
-        loginButton.setPreferredSize(new Dimension(300, 50));
+        loginButton.setPreferredSize(new Dimension(400, 50));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Set up grid bag constraints
@@ -226,7 +226,7 @@ public class CourseGUI extends JFrame {
         JDialog loginDialog = new JDialog((Frame)null, "Login - " + SCHOOL_NAME, true);
         loginDialog.getContentPane().add(loginPanel);
         loginDialog.pack();
-        loginDialog.setSize(400, 600);
+        loginDialog.setSize(500, 700); // Adjusted dialog size
         loginDialog.setLocationRelativeTo(null);
 
         // Add login action
