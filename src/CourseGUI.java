@@ -167,19 +167,21 @@ public class CourseGUI extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 40, 0));
 
         // Add login fields
-        JTextFieldWithPlaceholder username = new JTextFieldWithPlaceholder("USER NAME");
+        JTextField username = new JTextField();
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setBackground(Color.WHITE);
         username.setForeground(Color.BLACK);
         username.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-        username.setPreferredSize(new Dimension(400, 50)); // Increased width to 400
+        username.setPreferredSize(new Dimension(400, 50));
+        username.setHorizontalAlignment(JTextField.CENTER);
 
-        JPasswordFieldWithPlaceholder password = new JPasswordFieldWithPlaceholder("PASSWORD");
+        JPasswordField password = new JPasswordField();
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setBackground(Color.WHITE);
         password.setForeground(Color.BLACK);
         password.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
-        password.setPreferredSize(new Dimension(400, 50)); // Increased width to 400
+        password.setPreferredSize(new Dimension(400, 50));
+        password.setHorizontalAlignment(JPasswordField.CENTER);
 
         // Add "Forgot password?" link
         JLabel forgotPassword = new JLabel("Forgot password ?");
@@ -226,7 +228,7 @@ public class CourseGUI extends JFrame {
         JDialog loginDialog = new JDialog((Frame)null, "Login - " + SCHOOL_NAME, true);
         loginDialog.getContentPane().add(loginPanel);
         loginDialog.pack();
-        loginDialog.setSize(500, 700); // Adjusted dialog size
+        loginDialog.setSize(500, 700);
         loginDialog.setLocationRelativeTo(null);
 
         // Add login action
@@ -362,47 +364,5 @@ public class CourseGUI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(CourseGUI::showLogin);
-    }
-}
-
-// Helper class to add placeholder functionality to text fields
-class JTextFieldWithPlaceholder extends JTextField {
-    private String placeholder;
-
-    public JTextFieldWithPlaceholder(String placeholder) {
-        this.placeholder = placeholder;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        if (getText().isEmpty()) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setColor(Color.LIGHT_GRAY);
-            g2.drawString(placeholder, getInsets().left, getHeight() / 2 + g.getFontMetrics().getAscent() / 2);
-            g2.dispose();
-        }
-    }
-}
-
-// Helper class to add placeholder functionality to password fields
-class JPasswordFieldWithPlaceholder extends JPasswordField {
-    private String placeholder;
-
-    public JPasswordFieldWithPlaceholder(String placeholder) {
-        this.placeholder = placeholder;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        if (getText().isEmpty()) {
-            Graphics2D g2 = (Graphics2D) g.create();
-            g2.setColor(Color.LIGHT_GRAY);
-            g2.drawString(placeholder, getInsets().left, getHeight() / 2 + g.getFontMetrics().getAscent() / 2);
-            g2.dispose();
-        }
     }
 }
