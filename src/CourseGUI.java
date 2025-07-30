@@ -167,19 +167,23 @@ public class CourseGUI extends JFrame {
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 40, 0));
 
         // Add login fields
-        JTextField username = new JTextFieldWithPlaceholder("USER NAME");
+        JTextField username = new JTextField();
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setBackground(Color.WHITE);
         username.setForeground(Color.BLACK);
-        username.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        username.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
         username.setPreferredSize(new Dimension(300, 50));
+        username.setHorizontalAlignment(JTextField.CENTER);
+        username.setPlaceholder("USER NAME");
 
-        JPasswordField password = new JPasswordFieldWithPlaceholder("PASSWORD");
+        JPasswordField password = new JPasswordField();
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setBackground(Color.WHITE);
         password.setForeground(Color.BLACK);
-        password.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        password.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 2));
         password.setPreferredSize(new Dimension(300, 50));
+        password.setHorizontalAlignment(JPasswordField.CENTER);
+        password.setPlaceholder("PASSWORD");
 
         // Add "Forgot password?" link
         JLabel forgotPassword = new JLabel("Forgot password ?");
@@ -365,7 +369,7 @@ public class CourseGUI extends JFrame {
     }
 }
 
-// Helper class to add placeholder functionality to text fields
+// Extension of JTextField to support placeholder text
 class JTextFieldWithPlaceholder extends JTextField {
     private String placeholder;
 
@@ -379,14 +383,18 @@ class JTextFieldWithPlaceholder extends JTextField {
 
         if (getText().isEmpty()) {
             Graphics2D g2 = (Graphics2D) g.create();
-            g2.setColor(getDisabledTextColor());
+            g2.setColor(Color.LIGHT_GRAY);
             g2.drawString(placeholder, getInsets().left, getHeight() / 2 + g.getFontMetrics().getAscent() / 2);
             g2.dispose();
         }
     }
+
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
+    }
 }
 
-// Helper class to add placeholder functionality to password fields
+// Extension of JPasswordField to support placeholder text
 class JPasswordFieldWithPlaceholder extends JPasswordField {
     private String placeholder;
 
@@ -400,9 +408,13 @@ class JPasswordFieldWithPlaceholder extends JPasswordField {
 
         if (getText().isEmpty()) {
             Graphics2D g2 = (Graphics2D) g.create();
-            g2.setColor(getDisabledTextColor());
+            g2.setColor(Color.LIGHT_GRAY);
             g2.drawString(placeholder, getInsets().left, getHeight() / 2 + g.getFontMetrics().getAscent() / 2);
             g2.dispose();
         }
+    }
+
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
     }
 }
