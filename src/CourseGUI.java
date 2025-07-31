@@ -1,12 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.lang.ClassNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,17 +17,14 @@ public class CourseGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Header panel
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Add school logo
         ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         headerPanel.add(logoLabel, BorderLayout.NORTH);
 
-        // Add text under the logo
         JLabel appTitle = new JLabel("University of the People Course Management App");
         appTitle.setFont(new Font("Arial", Font.BOLD, 14));
         appTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -40,11 +32,9 @@ public class CourseGUI extends JFrame {
 
         add(headerPanel, BorderLayout.NORTH);
 
-        // Create tabs for different sections
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(new Font("Arial", Font.BOLD, 14));
 
-        // Course Management Tab
         JPanel coursePanel = new JPanel();
         coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
         coursePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -75,7 +65,6 @@ public class CourseGUI extends JFrame {
 
         tabbedPane.addTab("Course Management", coursePanel);
 
-        // Student Management Tab
         JPanel studentPanel = new JPanel();
         studentPanel.setLayout(new BoxLayout(studentPanel, BoxLayout.Y_AXIS));
         studentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -96,7 +85,6 @@ public class CourseGUI extends JFrame {
 
         tabbedPane.addTab("Student Management", studentPanel);
 
-        // Grade Management Tab
         JPanel gradePanel = new JPanel();
         gradePanel.setLayout(new BoxLayout(gradePanel, BoxLayout.Y_AXIS));
         gradePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -129,7 +117,6 @@ public class CourseGUI extends JFrame {
 
         add(tabbedPane, BorderLayout.CENTER);
 
-        // Add action listeners
         addCourseBtn.addActionListener(e -> showAddCourseDialog());
         addStudentBtn.addActionListener(e -> showAddStudentDialog());
         enrollBtn.addActionListener(e -> showEnrollDialog());
@@ -157,26 +144,22 @@ public class CourseGUI extends JFrame {
     }
 
     public static void showLogin() {
-        // Login panel
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridBagLayout());
         loginPanel.setBackground(Color.WHITE);
         loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Add logo
         ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
 
-        // Add title
         JLabel titleLabel = new JLabel("Course Management Software");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setForeground(new Color(51, 0, 102));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 0));
 
-        // Add login fields
         JTextField username = new JTextFieldWithPlaceholder("Username");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setBackground(Color.WHITE);
@@ -191,7 +174,6 @@ public class CourseGUI extends JFrame {
         password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
         password.setPreferredSize(new Dimension(300, 40));
 
-        // Add login button
         JButton loginButton = new JButton("LOG IN");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
         loginButton.setBackground(new Color(51, 0, 102));
@@ -201,7 +183,6 @@ public class CourseGUI extends JFrame {
         loginButton.setPreferredSize(new Dimension(200, 40));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        // Set up grid bag constraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridy = 0;
@@ -210,7 +191,6 @@ public class CourseGUI extends JFrame {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.fill = GridBagConstraints.NONE;
 
-        // Add components to login panel
         loginPanel.add(logoLabel, gbc);
 
         gbc.gridy = 1;
@@ -226,25 +206,19 @@ public class CourseGUI extends JFrame {
         gbc.insets = new Insets(30, 10, 10, 10);
         loginPanel.add(loginButton, gbc);
 
-        // Create login dialog
         JDialog loginDialog = new JDialog((Frame)null, "Login", true);
         loginDialog.getContentPane().add(loginPanel);
         loginDialog.pack();
         loginDialog.setSize(450, 600);
         loginDialog.setLocationRelativeTo(null);
 
-        // Login action
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
                     loginDialog.dispose();
-                    
-                    // Create an instance of CourseGUI and call loadDataFromFile()
                     CourseGUI courseGUI = new CourseGUI();
                     courseGUI.loadDataFromFile();
-                    
-                    // Make the main window visible
                     courseGUI.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(
@@ -257,7 +231,6 @@ public class CourseGUI extends JFrame {
             }
         });
 
-        // Show login dialog
         loginDialog.setVisible(true);
     }
 
@@ -350,11 +323,11 @@ public class CourseGUI extends JFrame {
     private void showCalculateGradeDialog() {
         Student student = selectStudent();
         if (student != null) {
-            try {
-                double grade = CourseManagement.calculateOverallGrade(student);
-                JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
-            } catch (Exception ex) {
+            double grade = student.calculateOverallGrade();
+            if (grade == 0.0) {
                 JOptionPane.showMessageDialog(this, "No grades available for this student.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
             }
         }
     }
@@ -413,13 +386,11 @@ public class CourseGUI extends JFrame {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // Show the login page
             CourseGUI.showLogin();
         });
     }
 }
 
-// Helper class for placeholder text in text fields
 class JTextFieldWithPlaceholder extends JTextField {
     private String placeholder;
 
@@ -440,7 +411,6 @@ class JTextFieldWithPlaceholder extends JTextField {
     }
 }
 
-// Helper class for placeholder text in password fields
 class JPasswordFieldWithPlaceholder extends JPasswordField {
     private String placeholder;
 

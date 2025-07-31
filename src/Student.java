@@ -44,7 +44,8 @@ public class Student implements Serializable {
     public double calculateOverallGrade() {
         double total = 0.0;
         int count = 0;
-        for (Double grade : enrolledCourses.values()) {
+        for (Map.Entry<Course, Double> entry : enrolledCourses.entrySet()) {
+            Double grade = entry.getValue();
             if (grade != null) {
                 total += grade;
                 count++;
