@@ -21,12 +21,11 @@ public class Student implements Serializable {
     // Enrollment method
     public boolean enrollInCourse(Course course) {
         if (course.getCurrentEnrollment() < course.getMaxCapacity()) {
-            if (enrolledCourses.containsKey(course)) {
-                return false;
-            }
-            if (course.enrollStudent()) {
-                enrolledCourses.put(course, null);
-                return true;
+            if (!enrolledCourses.containsKey(course)) {
+                if (course.enrollStudent()) {
+                    enrolledCourses.put(course, null);
+                    return true;
+                }
             }
         }
         return false;

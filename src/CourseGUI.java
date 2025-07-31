@@ -330,11 +330,15 @@ public class CourseGUI extends JFrame {
                 if (grade < 0 || grade > 100) {
                     JOptionPane.showMessageDialog(this, "Grade must be between 0 and 100.");
                 } else {
-                    if (student.assignGrade(course, grade)) {
-                        JOptionPane.showMessageDialog(this, "Grade assigned.");
-                        saveDataToFile();
+                    if (student.enrollInCourse(course)) { // Ensure student is enrolled
+                        if (student.assignGrade(course, grade)) {
+                            JOptionPane.showMessageDialog(this, "Grade assigned.");
+                            saveDataToFile();
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Grade assignment failed. Please ensure the student is enrolled in the course.");
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, "Grade assignment failed.");
+                        JOptionPane.showMessageDialog(this, "Student is not enrolled in the course. Please enroll the student first.");
                     }
                 }
             } catch (NumberFormatException ex) {
