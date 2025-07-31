@@ -1,4 +1,6 @@
-public class Course {
+import java.io.Serializable;
+
+public class Course implements Serializable {
     private String courseCode;
     private String courseName;
     private int maxCapacity;
@@ -13,22 +15,14 @@ public class Course {
         this.currentEnrollment = 0;
     }
 
-    public String getCourseCode() {
-        return courseCode;
-    }
+    // Getters
+    public String getCourseCode() { return courseCode; }
+    public String getCourseName() { return courseName; }
+    public int getMaxCapacity() { return maxCapacity; }
+    public int getCurrentEnrollment() { return currentEnrollment; }
+    public static int getTotalEnrolledStudents() { return totalEnrolledStudents; }
 
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public int getCurrentEnrollment() {
-        return currentEnrollment;
-    }
-
+    // Enrollment method
     public boolean enrollStudent() {
         if (currentEnrollment < maxCapacity) {
             currentEnrollment++;
@@ -36,10 +30,6 @@ public class Course {
             return true;
         }
         return false;
-    }
-
-    public static int getTotalEnrolledStudents() {
-        return totalEnrolledStudents;
     }
 
     @Override

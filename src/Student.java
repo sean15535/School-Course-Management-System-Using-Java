@@ -1,7 +1,8 @@
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Student {
+public class Student implements Serializable {
     private String name;
     private String id;
     private Map<Course, Double> enrolledCourses;
@@ -12,30 +13,35 @@ public class Student {
         this.enrolledCourses = new HashMap<>();
     }
 
-    public String getName() {
-        return name;
-    }
+    // Getters
+    public String getName() { return name; }
+    public String getId() { return id; }
+    public Map<Course, Double> getEnrolledCourses() { return enrolledCourses; }
 
-    public String getId() {
-        return id;
-    }
-
+    // Enrollment method
     public boolean enrollInCourse(Course course) {
-        if (course.enrollStudent()) {
-            enrolledCourses.put(course, null);
-            return true;
+        if (course.getCurrentEnrollment() < course.getMaxCapacity()) {
+            if (enrolledCourses.containsKey(course)) {
+                return false;
+            }
+            if (course.enrollStudent()) {
+                enrolledCourses.put(course, null);
+                return true;
+            }
         }
         return false;
     }
 
+    // Grade assignment method
     public boolean assignGrade(Course course, double grade) {
-        if (enrolledCourses.containsKey(course)) {
+        if (enrolledCourses.containsKey(course) && grade >= 0.0 && grade <= 100.0) {
             enrolledCourses.put(course, grade);
             return true;
         }
         return false;
     }
 
+    // Grade calculation method
     public double calculateOverallGrade() {
         double total = 0.0;
         int count = 0;
@@ -46,10 +52,6 @@ public class Student {
             }
         }
         return count > 0 ? total / count : 0.0;
-    }
-
-    public Map<Course, Double> getEnrolledCourses() {
-        return enrolledCourses;
     }
 
     @Override

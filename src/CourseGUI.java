@@ -1,7 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.lang.ClassNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +23,13 @@ public class CourseGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // Create a panel for the header
+        // Header panel
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Add school logo with original size
-        ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo"); // Use original size
+        // Add school logo
+        ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         headerPanel.add(logoLabel, BorderLayout.NORTH);
 
@@ -50,22 +56,22 @@ public class CourseGUI extends JFrame {
 
         JButton addCourseBtn = new JButton("Add Course");
         addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
-        addCourseBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        addCourseBtn.setBackground(new Color(101, 31, 118));
         addCourseBtn.setForeground(Color.WHITE);
-        addCourseBtn.setIcon(createImageIcon("plus.png", "Add Course", 16, 16)); // Icon size 16x16
+        addCourseBtn.setIcon(createImageIcon("plus.png", "Add Course", 16, 16));
         addCourseBtn.setToolTipText("Add a new course to the system");
         addCourseBtn.setIconTextGap(10);
-        addCourseBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
+        addCourseBtn.setMargin(new Insets(2, 2, 2, 2));
         coursePanel.add(addCourseBtn);
 
         JButton enrollBtn = new JButton("Enroll Student");
         enrollBtn.setFont(new Font("Arial", Font.PLAIN, 14));
-        enrollBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        enrollBtn.setBackground(new Color(101, 31, 118));
         enrollBtn.setForeground(Color.WHITE);
-        enrollBtn.setIcon(createImageIcon("user.png", "Enroll Student", 16, 16)); // Icon size 16x16
+        enrollBtn.setIcon(createImageIcon("user.png", "Enroll Student", 16, 16));
         enrollBtn.setToolTipText("Enroll a student in a course");
         enrollBtn.setIconTextGap(10);
-        enrollBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
+        enrollBtn.setMargin(new Insets(2, 2, 2, 2));
         coursePanel.add(enrollBtn);
 
         tabbedPane.addTab("Course Management", coursePanel);
@@ -81,12 +87,12 @@ public class CourseGUI extends JFrame {
 
         JButton addStudentBtn = new JButton("Add Student");
         addStudentBtn.setFont(new Font("Arial", Font.PLAIN, 14));
-        addStudentBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        addStudentBtn.setBackground(new Color(101, 31, 118));
         addStudentBtn.setForeground(Color.WHITE);
-        addStudentBtn.setIcon(createImageIcon("user-plus.png", "Add Student", 16, 16)); // Icon size 16x16
+        addStudentBtn.setIcon(createImageIcon("user-plus.png", "Add Student", 16, 16));
         addStudentBtn.setToolTipText("Add a new student to the system");
         addStudentBtn.setIconTextGap(10);
-        addStudentBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
+        addStudentBtn.setMargin(new Insets(2, 2, 2, 2));
         studentPanel.add(addStudentBtn);
 
         tabbedPane.addTab("Student Management", studentPanel);
@@ -102,22 +108,22 @@ public class CourseGUI extends JFrame {
 
         JButton assignGradeBtn = new JButton("Assign Grade");
         assignGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
-        assignGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        assignGradeBtn.setBackground(new Color(101, 31, 118));
         assignGradeBtn.setForeground(Color.WHITE);
-        assignGradeBtn.setIcon(createImageIcon("graduation.png", "Assign Grade", 16, 16)); // Icon size 16x16
+        assignGradeBtn.setIcon(createImageIcon("graduation.png", "Assign Grade", 16, 16));
         assignGradeBtn.setToolTipText("Assign a grade to a student for a course");
         assignGradeBtn.setIconTextGap(10);
-        assignGradeBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
+        assignGradeBtn.setMargin(new Insets(2, 2, 2, 2));
         gradePanel.add(assignGradeBtn);
 
         JButton calcGradeBtn = new JButton("Calculate Grade");
         calcGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
-        calcGradeBtn.setBackground(new Color(101, 31, 118)); // Purple color
+        calcGradeBtn.setBackground(new Color(101, 31, 118));
         calcGradeBtn.setForeground(Color.WHITE);
-        calcGradeBtn.setIcon(createImageIcon("calculator.png", "Calculate Grade", 16, 16)); // Icon size 16x16
+        calcGradeBtn.setIcon(createImageIcon("calculator.png", "Calculate Grade", 16, 16));
         calcGradeBtn.setToolTipText("Calculate a student's overall grade");
         calcGradeBtn.setIconTextGap(10);
-        calcGradeBtn.setMargin(new Insets(2, 2, 2, 2)); // Make the icon box smaller
+        calcGradeBtn.setMargin(new Insets(2, 2, 2, 2));
         gradePanel.add(calcGradeBtn);
 
         tabbedPane.addTab("Grade Management", gradePanel);
@@ -132,11 +138,10 @@ public class CourseGUI extends JFrame {
         calcGradeBtn.addActionListener(e -> showCalculateGradeDialog());
     }
 
-    // Method to create image icons with error handling and custom size
     protected ImageIcon createImageIcon(String path, String description, int width, int height) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
-            if (width == 0 || height == 0) { // Use original size if width or height is 0
+            if (width == 0 || height == 0) {
                 return new ImageIcon(imgURL, description);
             } else {
                 Image image = new ImageIcon(imgURL).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
@@ -148,21 +153,19 @@ public class CourseGUI extends JFrame {
         }
     }
 
-    // Overloaded method for createImageIcon without custom size
     protected ImageIcon createImageIcon(String path, String description) {
-        return createImageIcon(path, description, 0, 0); // Use original size
+        return createImageIcon(path, description, 0, 0);
     }
 
-    // ---- Login screen ----
     public static void showLogin() {
-        // Create login panel with improved UI
+        // Login panel
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridBagLayout());
-        loginPanel.setBackground(Color.WHITE); // Set background to white
+        loginPanel.setBackground(Color.WHITE);
         loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Add logo to login panel with original size
-        ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo"); // Use original size
+        // Add logo
+        ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
@@ -171,7 +174,7 @@ public class CourseGUI extends JFrame {
         JLabel titleLabel = new JLabel("Course Management Software");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        titleLabel.setForeground(new Color(51, 0, 102)); // Dark purple color
+        titleLabel.setForeground(new Color(51, 0, 102));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 0));
 
         // Add login fields
@@ -192,7 +195,7 @@ public class CourseGUI extends JFrame {
         // Add login button
         JButton loginButton = new JButton("LOG IN");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
-        loginButton.setBackground(new Color(51, 0, 102)); // Dark purple color
+        loginButton.setBackground(new Color(51, 0, 102));
         loginButton.setForeground(Color.WHITE);
         loginButton.setBorderPainted(false);
         loginButton.setFocusPainted(false);
@@ -224,23 +227,26 @@ public class CourseGUI extends JFrame {
         gbc.insets = new Insets(30, 10, 10, 10);
         loginPanel.add(loginButton, gbc);
 
-        // Create frame for login dialog
+        // Create login dialog
         JDialog loginDialog = new JDialog((Frame)null, "Login", true);
         loginDialog.getContentPane().add(loginPanel);
         loginDialog.pack();
         loginDialog.setSize(450, 600);
         loginDialog.setLocationRelativeTo(null);
 
-        // Add login action
+        // Login action
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
-                    loginDialog.dispose(); // Close the login dialog
+                    loginDialog.dispose();
+                    
+                    // Load data from file
+                    CourseGUI courseGUI = new CourseGUI();
+                    courseGUI.loadDataFromFile();
                     
                     // Create and display the main window
-                    CourseGUI mainWindow = new CourseGUI();
-                    mainWindow.setVisible(true); // Make the main window visible
+                    courseGUI.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(
                         loginDialog, 
@@ -256,7 +262,6 @@ public class CourseGUI extends JFrame {
         loginDialog.setVisible(true);
     }
 
-    // ---- GUI Functions ----
     private void showAddCourseDialog() {
         JTextField code = new JTextField();
         JTextField name = new JTextField();
@@ -273,6 +278,7 @@ public class CourseGUI extends JFrame {
             try {
                 courses.add(new Course(code.getText(), name.getText(), Integer.parseInt(cap.getText())));
                 JOptionPane.showMessageDialog(this, "Course added.");
+                saveDataToFile();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Invalid input.");
             }
@@ -292,6 +298,7 @@ public class CourseGUI extends JFrame {
         if (result == JOptionPane.OK_OPTION) {
             students.add(new Student(name.getText(), id.getText()));
             JOptionPane.showMessageDialog(this, "Student added.");
+            saveDataToFile();
         }
     }
 
@@ -300,9 +307,13 @@ public class CourseGUI extends JFrame {
         Course course = selectCourse();
 
         if (student != null && course != null) {
-            if (course.getEnrolledStudents().size() < course.getMaxCapacity()) {
-                course.enrollStudent(student);
-                JOptionPane.showMessageDialog(this, "Enrolled successfully.");
+            if (course.getCurrentEnrollment() < course.getMaxCapacity()) {
+                if (student.enrollInCourse(course)) {
+                    JOptionPane.showMessageDialog(this, "Enrolled successfully.");
+                    saveDataToFile();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Enrollment failed.");
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Course is full.");
             }
@@ -317,8 +328,12 @@ public class CourseGUI extends JFrame {
             String input = JOptionPane.showInputDialog(this, "Enter grade:");
             try {
                 double grade = Double.parseDouble(input);
-                course.assignGrade(student, grade);
-                JOptionPane.showMessageDialog(this, "Grade assigned.");
+                if (student.assignGrade(course, grade)) {
+                    JOptionPane.showMessageDialog(this, "Grade assigned.");
+                    saveDataToFile();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid grade value.");
+                }
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Invalid grade input.");
             }
@@ -328,8 +343,12 @@ public class CourseGUI extends JFrame {
     private void showCalculateGradeDialog() {
         Student student = selectStudent();
         if (student != null) {
-            double grade = calculateOverallGrade(student);
-            JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
+            try {
+                double grade = CourseManagement.calculateOverallGrade(student);
+                JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No grades available for this student.");
+            }
         }
     }
 
@@ -365,19 +384,24 @@ public class CourseGUI extends JFrame {
         return null;
     }
 
-    private double calculateOverallGrade(Student student) {
-        double total = 0;
-        int count = 0;
-        
-        for (Course course : courses) {
-            Double grade = course.getGrades().get(student);
-            if (grade != null) {
-                total += grade;
-                count++;
-            }
+    private void saveDataToFile() {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("course_data.ser"))) {
+            out.writeObject(courses);
+            out.writeObject(students);
+            JOptionPane.showMessageDialog(this, "Data saved successfully.");
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        return count > 0 ? total / count : 0;
+    }
+
+    private void loadDataFromFile() {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("course_data.ser"))) {
+            courses = (List<Course>) in.readObject();
+            students = (List<Student>) in.readObject();
+            JOptionPane.showMessageDialog(null, "Data loaded successfully.");
+        } catch (IOException | ClassNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "No saved data found. Starting with empty records.");
+        }
     }
 
     public static void main(String[] args) {
@@ -385,7 +409,7 @@ public class CourseGUI extends JFrame {
     }
 }
 
-// Helper class to add placeholder functionality to text fields
+// Helper class for placeholder text in text fields
 class JTextFieldWithPlaceholder extends JTextField {
     private String placeholder;
 
@@ -406,7 +430,7 @@ class JTextFieldWithPlaceholder extends JTextField {
     }
 }
 
-// Helper class to add placeholder functionality to password fields
+// Helper class for placeholder text in password fields
 class JPasswordFieldWithPlaceholder extends JPasswordField {
     private String placeholder;
 
@@ -424,79 +448,5 @@ class JPasswordFieldWithPlaceholder extends JPasswordField {
             g2.drawString(placeholder, getInsets().left, getHeight() / 2 + g.getFontMetrics().getAscent() / 2);
             g2.dispose();
         }
-    }
-}
-
-// Student class
-class Student {
-    private String name;
-    private String id;
-
-    public Student(String name, String id) {
-        this.name = name;
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return id + ": " + name;
-    }
-}
-
-// Course class
-class Course {
-    private String courseCode;
-    private String courseName;
-    private int maxCapacity;
-    private List<Student> enrolledStudents;
-    private java.util.Map<Student, Double> grades;
-
-    public Course(String courseCode, String courseName, int maxCapacity) {
-        this.courseCode = courseCode;
-        this.courseName = courseName;
-        this.maxCapacity = maxCapacity;
-        this.enrolledStudents = new ArrayList<>();
-        this.grades = new java.util.HashMap<>();
-    }
-
-    public String getCourseCode() {
-        return courseCode;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void enrollStudent(Student student) {
-        enrolledStudents.add(student);
-    }
-
-    public void assignGrade(Student student, double grade) {
-        grades.put(student, grade);
-    }
-
-    public List<Student> getEnrolledStudents() {
-        return enrolledStudents;
-    }
-
-    public java.util.Map<Student, Double> getGrades() {
-        return grades;
-    }
-
-    @Override
-    public String toString() {
-        return courseCode + ": " + courseName;
     }
 }
