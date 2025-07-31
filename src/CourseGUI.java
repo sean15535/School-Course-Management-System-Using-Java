@@ -6,7 +6,6 @@ import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.FileNotFoundException;
 import java.lang.ClassNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -241,11 +240,11 @@ public class CourseGUI extends JFrame {
                 if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
                     loginDialog.dispose();
                     
-                    // Load data from file
+                    // Create an instance of CourseGUI and call loadDataFromFile()
                     CourseGUI courseGUI = new CourseGUI();
                     courseGUI.loadDataFromFile();
                     
-                    // Create and display the main window
+                    // Make the main window visible
                     courseGUI.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(
@@ -325,17 +324,21 @@ public class CourseGUI extends JFrame {
         Course course = selectCourse();
 
         if (student != null && course != null) {
-            String input = JOptionPane.showInputDialog(this, "Enter grade:");
+            String input = JOptionPane.showInputDialog(this, "Enter grade (0-100):");
             try {
                 double grade = Double.parseDouble(input);
-                if (student.assignGrade(course, grade)) {
-                    JOptionPane.showMessageDialog(this, "Grade assigned.");
-                    saveDataToFile();
+                if (grade < 0 || grade > 100) {
+                    JOptionPane.showMessageDialog(this, "Grade must be between 0 and 100.");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Invalid grade value.");
+                    if (student.assignGrade(course, grade)) {
+                        JOptionPane.showMessageDialog(this, "Grade assigned.");
+                        saveDataToFile();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Grade assignment failed.");
+                    }
                 }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Invalid grade input.");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Invalid grade input. Please enter a numeric value.");
             }
         }
     }
@@ -405,7 +408,10 @@ public class CourseGUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(CourseGUI::showLogin);
+        SwingUtilities.invokeLater(() -> {
+            // Show the login page
+            CourseGUI.showLogin();
+        });
     }
 }
 
