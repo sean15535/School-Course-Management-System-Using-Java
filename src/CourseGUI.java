@@ -8,6 +8,7 @@ import java.util.List;
 public class CourseGUI extends JFrame {
     private static final String SCHOOL_NAME = "University of the People";
     private static List<Student> students = new ArrayList<>();
+    private static List<Course> courses = new ArrayList<>();
 
     public CourseGUI() {
         setTitle(SCHOOL_NAME + " - Course Management System");
@@ -158,44 +159,44 @@ public class CourseGUI extends JFrame {
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridBagLayout());
         loginPanel.setBackground(Color.WHITE); // Set background to white
-        loginPanel.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+        loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Add logo to login panel with original size
         ImageIcon logo = new CourseGUI().createImageIcon("uopeople_logo.png", "School Logo"); // Use original size
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 40, 0));
+        logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
+
+        // Add title
+        JLabel titleLabel = new JLabel("Course Management Software");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(new Color(51, 0, 102)); // Dark purple color
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 0));
 
         // Add login fields
-        JTextField username = new JTextFieldWithPlaceholder("USER NAME");
+        JTextField username = new JTextFieldWithPlaceholder("Username");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setBackground(Color.WHITE);
         username.setForeground(Color.BLACK);
-        username.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        username.setPreferredSize(new Dimension(300, 50));
+        username.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+        username.setPreferredSize(new Dimension(300, 40));
 
-        JPasswordField password = new JPasswordFieldWithPlaceholder("PASSWORD");
+        JPasswordField password = new JPasswordFieldWithPlaceholder("Password");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setBackground(Color.WHITE);
         password.setForeground(Color.BLACK);
-        password.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        password.setPreferredSize(new Dimension(300, 50));
-
-        // Add "Forgot password?" link
-        JLabel forgotPassword = new JLabel("Forgot password ?");
-        forgotPassword.setForeground(Color.BLUE);
-        forgotPassword.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        forgotPassword.setHorizontalAlignment(SwingConstants.CENTER);
-        forgotPassword.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+        password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
+        password.setPreferredSize(new Dimension(300, 40));
 
         // Add login button
         JButton loginButton = new JButton("LOG IN");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
-        loginButton.setBackground(new Color(101, 31, 118)); // Purple color
+        loginButton.setBackground(new Color(51, 0, 102)); // Dark purple color
         loginButton.setForeground(Color.WHITE);
         loginButton.setBorderPainted(false);
         loginButton.setFocusPainted(false);
-        loginButton.setPreferredSize(new Dimension(300, 50));
+        loginButton.setPreferredSize(new Dimension(200, 40));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         // Set up grid bag constraints
@@ -211,22 +212,23 @@ public class CourseGUI extends JFrame {
         loginPanel.add(logoLabel, gbc);
 
         gbc.gridy = 1;
-        loginPanel.add(username, gbc);
+        loginPanel.add(titleLabel, gbc);
 
         gbc.gridy = 2;
-        loginPanel.add(password, gbc);
+        loginPanel.add(username, gbc);
 
         gbc.gridy = 3;
-        loginPanel.add(forgotPassword, gbc);
+        loginPanel.add(password, gbc);
 
         gbc.gridy = 4;
+        gbc.insets = new Insets(30, 10, 10, 10);
         loginPanel.add(loginButton, gbc);
 
         // Create frame for login dialog
-        JDialog loginDialog = new JDialog((Frame)null, "Login - " + SCHOOL_NAME, true);
+        JDialog loginDialog = new JDialog((Frame)null, "Login", true);
         loginDialog.getContentPane().add(loginPanel);
         loginDialog.pack();
-        loginDialog.setSize(400, 600);
+        loginDialog.setSize(450, 600);
         loginDialog.setLocationRelativeTo(null);
 
         // Add login action
@@ -266,7 +268,7 @@ public class CourseGUI extends JFrame {
         int result = JOptionPane.showConfirmDialog(this, inputs, "Add Course", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
             try {
-                CourseManagement.addCourse(code.getText(), name.getText(), Integer.parseInt(cap.getText()));
+                courses.add(new Course(code.getText(), name.getText(), Integer.parseInt(cap.getText())));
                 JOptionPane.showMessageDialog(this, "Course added.");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Invalid input.");
@@ -295,7 +297,8 @@ public class CourseGUI extends JFrame {
         Course course = selectCourse();
 
         if (student != null && course != null) {
-            if (CourseManagement.enrollStudent(student, course)) {
+            if (course.getEnrolledStudents().size() < course.getMaxCapacity()) {
+                course.enrollStudent(student);
                 JOptionPane.showMessageDialog(this, "Enrolled successfully.");
             } else {
                 JOptionPane.showMessageDialog(this, "Course is full.");
@@ -311,7 +314,7 @@ public class CourseGUI extends JFrame {
             String input = JOptionPane.showInputDialog(this, "Enter grade:");
             try {
                 double grade = Double.parseDouble(input);
-                CourseManagement.assignGrade(student, course, grade);
+                course.assignGrade(student, grade);
                 JOptionPane.showMessageDialog(this, "Grade assigned.");
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(this, "Invalid grade input.");
@@ -322,7 +325,7 @@ public class CourseGUI extends JFrame {
     private void showCalculateGradeDialog() {
         Student student = selectStudent();
         if (student != null) {
-            double grade = CourseManagement.calculateOverallGrade(student);
+            double grade = calculateOverallGrade(student);
             JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
         }
     }
@@ -344,7 +347,6 @@ public class CourseGUI extends JFrame {
     }
 
     private Course selectCourse() {
-        List<Course> courses = CourseManagement.getCourses();
         if (courses.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No courses available.");
             return null;
@@ -358,6 +360,21 @@ public class CourseGUI extends JFrame {
             return courses.stream().filter(c -> c.getCourseCode().equals(code)).findFirst().orElse(null);
         }
         return null;
+    }
+
+    private double calculateOverallGrade(Student student) {
+        double total = 0;
+        int count = 0;
+        
+        for (Course course : courses) {
+            Double grade = course.getGrades().get(student);
+            if (grade != null) {
+                total += grade;
+                count++;
+            }
+        }
+        
+        return count > 0 ? total / count : 0;
     }
 
     public static void main(String[] args) {
@@ -404,5 +421,79 @@ class JPasswordFieldWithPlaceholder extends JPasswordField {
             g2.drawString(placeholder, getInsets().left, getHeight() / 2 + g.getFontMetrics().getAscent() / 2);
             g2.dispose();
         }
+    }
+}
+
+// Student class
+class Student {
+    private String name;
+    private String id;
+
+    public Student(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return id + ": " + name;
+    }
+}
+
+// Course class
+class Course {
+    private String courseCode;
+    private String courseName;
+    private int maxCapacity;
+    private List<Student> enrolledStudents;
+    private java.util.Map<Student, Double> grades;
+
+    public Course(String courseCode, String courseName, int maxCapacity) {
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.maxCapacity = maxCapacity;
+        this.enrolledStudents = new ArrayList<>();
+        this.grades = new java.util.HashMap<>();
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public void enrollStudent(Student student) {
+        enrolledStudents.add(student);
+    }
+
+    public void assignGrade(Student student, double grade) {
+        grades.put(student, grade);
+    }
+
+    public List<Student> getEnrolledStudents() {
+        return enrolledStudents;
+    }
+
+    public java.util.Map<Student, Double> getGrades() {
+        return grades;
+    }
+
+    @Override
+    public String toString() {
+        return courseCode + ": " + courseName;
     }
 }
