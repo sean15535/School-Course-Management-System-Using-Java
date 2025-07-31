@@ -237,7 +237,10 @@ public class CourseGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if ("admin".equals(username.getText()) && "admin".equals(new String(password.getPassword()))) {
                     loginDialog.dispose(); // Close the login dialog
-                    new CourseGUI(); // Show the main application window
+                    
+                    // Create and display the main window
+                    CourseGUI mainWindow = new CourseGUI();
+                    mainWindow.setVisible(true); // Make the main window visible
                 } else {
                     JOptionPane.showMessageDialog(
                         loginDialog, 
