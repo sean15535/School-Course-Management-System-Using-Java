@@ -5,18 +5,24 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+// Main GUI class for the Course Management System
 public class CourseGUI extends JFrame {
+    // School name constant
     private static final String SCHOOL_NAME = "University of the People";
+    // List to store all students
     private static List<Student> students = new ArrayList<>();
+    // List to store all courses
     private static List<Course> courses = new ArrayList<>();
 
+    // Constructor to set up the GUI
     public CourseGUI() {
         setTitle(SCHOOL_NAME + " - Course Management System");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // Center window
         setLayout(new BorderLayout());
 
+        // Header panel with logo and title
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -32,9 +38,11 @@ public class CourseGUI extends JFrame {
 
         add(headerPanel, BorderLayout.NORTH);
 
+        // Tabbed pane for different management panels
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(new Font("Arial", Font.BOLD, 14));
 
+        // Course management panel
         JPanel coursePanel = new JPanel();
         coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
         coursePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -43,6 +51,7 @@ public class CourseGUI extends JFrame {
         courseTitle.setFont(new Font("Arial", Font.BOLD, 18));
         coursePanel.add(courseTitle);
 
+        // Button to add a new course
         JButton addCourseBtn = new JButton("Add Course");
         addCourseBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addCourseBtn.setBackground(new Color(101, 31, 118));
@@ -53,6 +62,7 @@ public class CourseGUI extends JFrame {
         addCourseBtn.setMargin(new Insets(2, 2, 2, 2));
         coursePanel.add(addCourseBtn);
 
+        // Button to enroll a student in a course
         JButton enrollBtn = new JButton("Enroll Student");
         enrollBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         enrollBtn.setBackground(new Color(101, 31, 118));
@@ -65,6 +75,7 @@ public class CourseGUI extends JFrame {
 
         tabbedPane.addTab("Course Management", coursePanel);
 
+        // Student management panel
         JPanel studentPanel = new JPanel();
         studentPanel.setLayout(new BoxLayout(studentPanel, BoxLayout.Y_AXIS));
         studentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -73,6 +84,7 @@ public class CourseGUI extends JFrame {
         studentTitle.setFont(new Font("Arial", Font.BOLD, 18));
         studentPanel.add(studentTitle);
 
+        // Button to add a new student
         JButton addStudentBtn = new JButton("Add Student");
         addStudentBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         addStudentBtn.setBackground(new Color(101, 31, 118));
@@ -85,6 +97,7 @@ public class CourseGUI extends JFrame {
 
         tabbedPane.addTab("Student Management", studentPanel);
 
+        // Grade management panel
         JPanel gradePanel = new JPanel();
         gradePanel.setLayout(new BoxLayout(gradePanel, BoxLayout.Y_AXIS));
         gradePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -93,6 +106,7 @@ public class CourseGUI extends JFrame {
         gradeTitle.setFont(new Font("Arial", Font.BOLD, 18));
         gradePanel.add(gradeTitle);
 
+        // Button to assign a grade to a student
         JButton assignGradeBtn = new JButton("Assign Grade");
         assignGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         assignGradeBtn.setBackground(new Color(101, 31, 118));
@@ -103,6 +117,7 @@ public class CourseGUI extends JFrame {
         assignGradeBtn.setMargin(new Insets(2, 2, 2, 2));
         gradePanel.add(assignGradeBtn);
 
+        // Button to calculate a student's overall grade
         JButton calcGradeBtn = new JButton("Calculate Grade");
         calcGradeBtn.setFont(new Font("Arial", Font.PLAIN, 14));
         calcGradeBtn.setBackground(new Color(101, 31, 118));
@@ -117,6 +132,7 @@ public class CourseGUI extends JFrame {
 
         add(tabbedPane, BorderLayout.CENTER);
 
+        // Add action listeners for buttons
         addCourseBtn.addActionListener(e -> showAddCourseDialog());
         addStudentBtn.addActionListener(e -> showAddStudentDialog());
         enrollBtn.addActionListener(e -> showEnrollDialog());
@@ -124,6 +140,7 @@ public class CourseGUI extends JFrame {
         calcGradeBtn.addActionListener(e -> showCalculateGradeDialog());
     }
 
+    // Helper method to create an ImageIcon with optional scaling
     protected ImageIcon createImageIcon(String path, String description, int width, int height) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
@@ -139,10 +156,12 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Overloaded helper for ImageIcon without scaling
     protected ImageIcon createImageIcon(String path, String description) {
         return createImageIcon(path, description, 0, 0);
     }
 
+    // Static method to show the login dialog before launching the main GUI
     public static void showLogin() {
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridBagLayout());
@@ -160,6 +179,7 @@ public class CourseGUI extends JFrame {
         titleLabel.setForeground(new Color(51, 0, 102));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 30, 0));
 
+        // Username and password fields with placeholders
         JTextField username = new JTextFieldWithPlaceholder("Username");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setBackground(Color.WHITE);
@@ -174,6 +194,7 @@ public class CourseGUI extends JFrame {
         password.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY));
         password.setPreferredSize(new Dimension(300, 40));
 
+        // Login button
         JButton loginButton = new JButton("LOG IN");
         loginButton.setFont(new Font("Arial", Font.BOLD, 14));
         loginButton.setBackground(new Color(51, 0, 102));
@@ -183,6 +204,7 @@ public class CourseGUI extends JFrame {
         loginButton.setPreferredSize(new Dimension(200, 40));
         loginButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
+        // Layout constraints for login panel
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.gridy = 0;
@@ -206,12 +228,14 @@ public class CourseGUI extends JFrame {
         gbc.insets = new Insets(30, 10, 10, 10);
         loginPanel.add(loginButton, gbc);
 
+        // Modal dialog for login
         JDialog loginDialog = new JDialog((Frame)null, "Login", true);
         loginDialog.getContentPane().add(loginPanel);
         loginDialog.pack();
         loginDialog.setSize(450, 600);
         loginDialog.setLocationRelativeTo(null);
 
+        // Login button action: checks credentials and launches main GUI
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -234,6 +258,7 @@ public class CourseGUI extends JFrame {
         loginDialog.setVisible(true);
     }
 
+    // Dialog to add a new course
     private void showAddCourseDialog() {
         JTextField code = new JTextField();
         JTextField name = new JTextField();
@@ -257,6 +282,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Dialog to add a new student
     private void showAddStudentDialog() {
         JTextField name = new JTextField();
         JTextField id = new JTextField();
@@ -274,6 +300,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Dialog to enroll a student in a course
     private void showEnrollDialog() {
         Student student = selectStudent();
         Course course = selectCourse();
@@ -292,6 +319,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Dialog to assign a grade to a student for a course
     private void showAssignGradeDialog() {
         Student student = selectStudent();
         Course course = selectCourse();
@@ -320,6 +348,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Dialog to calculate and show a student's overall grade
     private void showCalculateGradeDialog() {
         Student student = selectStudent();
         if (student != null) {
@@ -332,6 +361,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Helper to select a student from the list
     private Student selectStudent() {
         if (students.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No students available.");
@@ -348,6 +378,7 @@ public class CourseGUI extends JFrame {
         return null;
     }
 
+    // Helper to select a course from the list
     private Course selectCourse() {
         if (courses.isEmpty()) {
             JOptionPane.showMessageDialog(this, "No courses available.");
@@ -364,6 +395,7 @@ public class CourseGUI extends JFrame {
         return null;
     }
 
+    // Save courses and students to a file for persistence
     private void saveDataToFile() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("course_data.ser"))) {
             out.writeObject(courses);
@@ -374,6 +406,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Load courses and students from a file
     private void loadDataFromFile() {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("course_data.ser"))) {
             courses = (List<Course>) in.readObject();
@@ -384,6 +417,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
+    // Main method to launch the application
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             CourseGUI.showLogin();
@@ -391,6 +425,7 @@ public class CourseGUI extends JFrame {
     }
 }
 
+// Custom JTextField with placeholder text
 class JTextFieldWithPlaceholder extends JTextField {
     private String placeholder;
 
@@ -402,6 +437,7 @@ class JTextFieldWithPlaceholder extends JTextField {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Draw placeholder if field is empty
         if (getText().isEmpty()) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setColor(getDisabledTextColor());
@@ -411,6 +447,7 @@ class JTextFieldWithPlaceholder extends JTextField {
     }
 }
 
+// Custom JPasswordField with placeholder text
 class JPasswordFieldWithPlaceholder extends JPasswordField {
     private String placeholder;
 
@@ -422,6 +459,7 @@ class JPasswordFieldWithPlaceholder extends JPasswordField {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Draw placeholder if field is empty
         if (getText().isEmpty()) {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setColor(getDisabledTextColor());
