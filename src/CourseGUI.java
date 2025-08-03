@@ -350,12 +350,17 @@ public class CourseGUI extends JFrame {
 
     // Dialog to calculate and show a student's overall grade
     private void showCalculateGradeDialog() {
+        // Prompt the user to select a student from the list
         Student student = selectStudent();
+        // Check if a student was selected
         if (student != null) {
+            // Calculate the overall grade for the selected student
             double grade = student.calculateOverallGrade();
+            // If the grade is 0.0, it means there are no grades available for this student
             if (grade == 0.0) {
                 JOptionPane.showMessageDialog(this, "No grades available for this student.");
             } else {
+                // Display the calculated overall grade to the user
                 JOptionPane.showMessageDialog(this, "Overall Grade: " + grade);
             }
         }
