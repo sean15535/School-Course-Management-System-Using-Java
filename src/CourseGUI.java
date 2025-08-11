@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,6 +132,9 @@ public class CourseGUI extends JFrame {
         tabbedPane.addTab("Grade Management", gradePanel);
 
         add(tabbedPane, BorderLayout.CENTER);
+
+        // Add footer
+        addFooter();
 
         // Add action listeners for buttons
         addCourseBtn.addActionListener(e -> showAddCourseDialog());
@@ -420,6 +424,39 @@ public class CourseGUI extends JFrame {
         } catch (IOException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, "No saved data found. Starting with empty records.");
         }
+    }
+
+    // Method to create footer
+    private void addFooter() {
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        footerPanel.setBackground(Color.LIGHT_GRAY);
+
+        JLabel footerText = new JLabel("Created by Alli Oluwaseun (");
+        footerText.setFont(new Font("Arial", Font.PLAIN, 12));
+
+        JButton linkedinLink = new JButton("https://www.linkedin.com/in/oluwaseun-alli-aa4a812ba/");
+        linkedinLink.setFont(new Font("Arial", Font.PLAIN, 12));
+        linkedinLink.setContentAreaFilled(false);
+        linkedinLink.setBorderPainted(false);
+        linkedinLink.setFocusPainted(false);
+        linkedinLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        linkedinLink.setForeground(Color.BLUE);
+
+        linkedinLink.addActionListener(e -> {
+            try {
+                Desktop.getDesktop().browse(URI.create("https://www.linkedin.com/in/oluwaseun-alli-aa4a812ba/"));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error opening link: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+
+        footerPanel.add(footerText);
+        footerPanel.add(linkedinLink);
+        footerPanel.add(new JLabel(")"));
+
+        add(footerPanel, BorderLayout.SOUTH);
     }
 
     // Main method to launch the application
