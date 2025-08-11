@@ -433,10 +433,11 @@ public class CourseGUI extends JFrame {
         footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         footerPanel.setBackground(Color.LIGHT_GRAY);
 
-        JLabel footerText = new JLabel("Created by Alli Oluwaseun (");
-        footerText.setFont(new Font("Arial", Font.PLAIN, 12));
+        JLabel createdByText = new JLabel("Created by ");
+        createdByText.setFont(new Font("Arial", Font.PLAIN, 12));
 
-        JButton linkedinLink = new JButton("https://www.linkedin.com/in/oluwaseun-alli-aa4a812ba/");
+        // Create a link for "Alli Oluwaseun"
+        JButton linkedinLink = new JButton("Alli Oluwaseun");
         linkedinLink.setFont(new Font("Arial", Font.PLAIN, 12));
         linkedinLink.setContentAreaFilled(false);
         linkedinLink.setBorderPainted(false);
@@ -452,7 +453,7 @@ public class CourseGUI extends JFrame {
             }
         });
 
-        footerPanel.add(footerText);
+        footerPanel.add(createdByText);
         footerPanel.add(linkedinLink);
         footerPanel.add(new JLabel(")"));
 
