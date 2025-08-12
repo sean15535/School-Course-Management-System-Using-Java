@@ -455,7 +455,6 @@ public class CourseGUI extends JFrame {
 
         footerPanel.add(createdByText);
         footerPanel.add(linkedinLink);
-        footerPanel.add(new JLabel(")"));
 
         add(footerPanel, BorderLayout.SOUTH);
     }
