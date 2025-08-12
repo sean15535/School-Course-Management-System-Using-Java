@@ -433,7 +433,7 @@ public class CourseGUI extends JFrame {
         footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         footerPanel.setBackground(Color.LIGHT_GRAY);
 
-        JLabel createdByText = new JLabel("Created with love by ");
+        JLabel createdByText = new JLabel("Created with love by");
         createdByText.setFont(new Font("Arial", Font.PLAIN, 12));
 
         // Create a link for "Alli Oluwaseun"
