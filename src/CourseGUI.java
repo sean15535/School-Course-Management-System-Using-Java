@@ -443,6 +443,7 @@ public class CourseGUI extends JFrame {
         linkedinLink.setFocusPainted(false);
         linkedinLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         linkedinLink.setForeground(Color.BLUE);
+        linkedinLink.setMargin(new Insets(0, 0, 0, 0));
 
         linkedinLink.addActionListener(e -> {
             try {
