@@ -47,7 +47,7 @@ public class CourseGUI extends JFrame {
         JPanel coursePanel = new JPanel();
         coursePanel.setLayout(new BoxLayout(coursePanel, BoxLayout.Y_AXIS));
         coursePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
+
         JLabel courseTitle = new JLabel("Course Management");
         courseTitle.setFont(new Font("Arial", Font.BOLD, 18));
         coursePanel.add(courseTitle);
@@ -80,7 +80,7 @@ public class CourseGUI extends JFrame {
         JPanel studentPanel = new JPanel();
         studentPanel.setLayout(new BoxLayout(studentPanel, BoxLayout.Y_AXIS));
         studentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
+
         JLabel studentTitle = new JLabel("Student Management");
         studentTitle.setFont(new Font("Arial", Font.BOLD, 18));
         studentPanel.add(studentTitle);
@@ -102,7 +102,7 @@ public class CourseGUI extends JFrame {
         JPanel gradePanel = new JPanel();
         gradePanel.setLayout(new BoxLayout(gradePanel, BoxLayout.Y_AXIS));
         gradePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        
+
         JLabel gradeTitle = new JLabel("Grade Management");
         gradeTitle.setFont(new Font("Arial", Font.BOLD, 18));
         gradePanel.add(gradeTitle);
@@ -250,9 +250,9 @@ public class CourseGUI extends JFrame {
                     courseGUI.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(
-                        loginDialog, 
-                        "Invalid credentials. Please try again.", 
-                        "Error", 
+                        loginDialog,
+                        "Invalid credentials. Please try again.",
+                        "Error",
                         JOptionPane.ERROR_MESSAGE
                     );
                 }
@@ -428,12 +428,11 @@ public class CourseGUI extends JFrame {
 
     // Method to create footer
     private void addFooter() {
-        JPanel footerPanel = new JPanel();
-        footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0)); // zero horizontal gap
+        footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));     // vertical padding only
         footerPanel.setBackground(Color.LIGHT_GRAY);
 
-        JLabel createdByText = new JLabel("Created with love by");
+        JLabel createdByText = new JLabel("Created with love by ");
         createdByText.setFont(new Font("Arial", Font.PLAIN, 12));
 
         // Create a link for "Alli Oluwaseun"
