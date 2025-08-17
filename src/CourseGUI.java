@@ -444,7 +444,7 @@ public class CourseGUI extends JFrame {
         JLabel createdByText = new JLabel("Created with love by ");
         createdByText.setFont(new Font("Arial", Font.PLAIN, 12));
 
-        // Create a link for "Alli Oluwaseun"
+
         JButton linkedinLink = new JButton("Alli Oluwaseun");
         linkedinLink.setFont(new Font("Arial", Font.PLAIN, 12));
         linkedinLink.setContentAreaFilled(false);
