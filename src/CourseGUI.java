@@ -23,6 +23,15 @@ public class CourseGUI extends JFrame {
         setLocationRelativeTo(null); // Center window
         setLayout(new BorderLayout());
 
+        // ===== NEW: set window icon =====
+        try {
+            Image icon = new ImageIcon(getClass().getResource("/uopeople_logo.png")).getImage();
+            setIconImage(icon);
+        } catch (Exception e) {
+            System.err.println("Could not load window icon: " + e.getMessage());
+        }
+        // ================================
+
         // Header panel with logo and title
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BorderLayout());
