@@ -25,7 +25,7 @@ public class CourseGUI extends JFrame {
 
         // ===== NEW: set window icon =====
         try {
-            Image icon = new ImageIcon(getClass().getResource("/uopeople_logo.png")).getImage();
+            Image icon = new ImageIcon(getClass().getResource("/resources/uopeople_logo.png")).getImage();
             setIconImage(icon);
         } catch (Exception e) {
             System.err.println("Could not load window icon: " + e.getMessage());
@@ -37,7 +37,7 @@ public class CourseGUI extends JFrame {
         headerPanel.setLayout(new BorderLayout());
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        ImageIcon logo = createImageIcon("uopeople_logo.png", "School Logo");
+        ImageIcon logo = createImageIcon("/resources/uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         headerPanel.add(logoLabel, BorderLayout.NORTH);
 
