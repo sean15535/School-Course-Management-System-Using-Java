@@ -12,7 +12,7 @@ public class CourseGUI extends JFrame {
     private static List<Student> students = new ArrayList<>();
     private static List<Course> courses   = new ArrayList<>();
 
-    /* --------------------  CONSTRUCTOR  -------------------- */
+    /* ------------------------------------------------------ */
     public CourseGUI() {
         setTitle(SCHOOL_NAME + " - Course Management System");
         setSize(800, 600);
@@ -20,21 +20,21 @@ public class CourseGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        /* 1. WINDOW ICON  */
+        /* Window icon */
         try {
             Image icon = new ImageIcon(
-                    CourseGUI.class.getResource("resourses/uopeople_logo.png")
+                    CourseGUI.class.getResource("/resources/uopeople_logo.png")
             ).getImage();
             setIconImage(icon);
         } catch (Exception e) {
             System.err.println("Could not load window icon: " + e.getMessage());
         }
 
-        /* 2. HEADER  */
+        /* Header */
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        ImageIcon logo = createImageIcon("resourses/uopeople_logo.png", "School Logo");
+        ImageIcon logo = createImageIcon("/resources/uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         headerPanel.add(logoLabel, BorderLayout.NORTH);
 
@@ -45,7 +45,7 @@ public class CourseGUI extends JFrame {
 
         add(headerPanel, BorderLayout.NORTH);
 
-        /* 3. TABBED PANE  */
+        /* Tabs */
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setFont(new Font("Arial", Font.BOLD, 14));
 
@@ -60,13 +60,13 @@ public class CourseGUI extends JFrame {
 
         JButton addCourseBtn = new JButton("Add Course");
         styleButton(addCourseBtn);
-        addCourseBtn.setIcon(createImageIcon("resourses/plus.png", "Add Course", 16, 16));
+        addCourseBtn.setIcon(createImageIcon("/resources/plus.png", "Add Course", 16, 16));
         addCourseBtn.setToolTipText("Add a new course to the system");
         coursePanel.add(addCourseBtn);
 
         JButton enrollBtn = new JButton("Enroll Student");
         styleButton(enrollBtn);
-        enrollBtn.setIcon(createImageIcon("resourses/user.png", "Enroll Student", 16, 16));
+        enrollBtn.setIcon(createImageIcon("/resources/user.png", "Enroll Student", 16, 16));
         enrollBtn.setToolTipText("Enroll a student in a course");
         coursePanel.add(enrollBtn);
 
@@ -83,7 +83,7 @@ public class CourseGUI extends JFrame {
 
         JButton addStudentBtn = new JButton("Add Student");
         styleButton(addStudentBtn);
-        addStudentBtn.setIcon(createImageIcon("resourses/user-plus.png", "Add Student", 16, 16));
+        addStudentBtn.setIcon(createImageIcon("/resources/user-plus.png", "Add Student", 16, 16));
         addStudentBtn.setToolTipText("Add a new student to the system");
         studentPanel.add(addStudentBtn);
 
@@ -100,13 +100,13 @@ public class CourseGUI extends JFrame {
 
         JButton assignGradeBtn = new JButton("Assign Grade");
         styleButton(assignGradeBtn);
-        assignGradeBtn.setIcon(createImageIcon("resourses/graduation.png", "Assign Grade", 16, 16));
+        assignGradeBtn.setIcon(createImageIcon("/resources/graduation.png", "Assign Grade", 16, 16));
         assignGradeBtn.setToolTipText("Assign a grade to a student for a course");
         gradePanel.add(assignGradeBtn);
 
         JButton calcGradeBtn = new JButton("Calculate Grade");
         styleButton(calcGradeBtn);
-        calcGradeBtn.setIcon(createImageIcon("resourses/calculator.png", "Calculate Grade", 16, 16));
+        calcGradeBtn.setIcon(createImageIcon("/resources/calculator.png", "Calculate Grade", 16, 16));
         calcGradeBtn.setToolTipText("Calculate a student's overall grade");
         gradePanel.add(calcGradeBtn);
 
@@ -114,10 +114,10 @@ public class CourseGUI extends JFrame {
 
         add(tabbedPane, BorderLayout.CENTER);
 
-        /* 4. FOOTER  */
+        /* Footer */
         addFooter();
 
-        /* 5. LISTENERS  */
+        /* Listeners */
         addCourseBtn.addActionListener(e -> showAddCourseDialog());
         addStudentBtn.addActionListener(e -> showAddStudentDialog());
         enrollBtn.addActionListener(e -> showEnrollDialog());
@@ -125,8 +125,7 @@ public class CourseGUI extends JFrame {
         calcGradeBtn.addActionListener(e -> showCalculateGradeDialog());
     }
 
-    /* --------------------  HELPER METHODS  -------------------- */
-
+    /* -------------------- Helpers -------------------- */
     private ImageIcon createImageIcon(String path, String description, int w, int h) {
         java.net.URL imgURL = getClass().getResource(path);
         if (imgURL != null) {
@@ -151,13 +150,13 @@ public class CourseGUI extends JFrame {
         b.setMargin(new Insets(2, 2, 2, 2));
     }
 
-    /* --------------------  LOGIN  -------------------- */
+    /* -------------------- LOGIN -------------------- */
     public static void showLogin() {
         JPanel loginPanel = new JPanel(new GridBagLayout());
         loginPanel.setBackground(Color.WHITE);
         loginPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        ImageIcon logo = new CourseGUI().createImageIcon("resourses/uopeople_logo.png", "School Logo");
+        ImageIcon logo = new CourseGUI().createImageIcon("/resources/uopeople_logo.png", "School Logo");
         JLabel logoLabel = new JLabel(logo);
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
         logoLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0));
@@ -223,7 +222,7 @@ public class CourseGUI extends JFrame {
         loginDialog.setVisible(true);
     }
 
-    /* --------------------  DIALOGS  -------------------- */
+    /* -------------------- DIALOGS -------------------- */
     private void showAddCourseDialog() {
         JTextField code = new JTextField();
         JTextField name = new JTextField();
@@ -339,7 +338,7 @@ public class CourseGUI extends JFrame {
         return null;
     }
 
-    /* --------------------  PERSISTENCE  -------------------- */
+    /* -------------------- PERSISTENCE -------------------- */
     private void saveDataToFile() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("course_data.ser"))) {
             out.writeObject(courses);
@@ -361,7 +360,7 @@ public class CourseGUI extends JFrame {
         }
     }
 
-    /* --------------------  FOOTER  -------------------- */
+    /* -------------------- FOOTER -------------------- */
     private void addFooter() {
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         footerPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
@@ -378,7 +377,6 @@ public class CourseGUI extends JFrame {
         linkedinLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         linkedinLink.setForeground(Color.BLUE);
         linkedinLink.setMargin(new Insets(0, 0, 0, 0));
-
         linkedinLink.addActionListener(e -> {
             try {
                 Desktop.getDesktop().browse(new URI("https://www.linkedin.com/in/oluwaseun-alli-aa4a812ba/"));
@@ -393,13 +391,13 @@ public class CourseGUI extends JFrame {
         add(footerPanel, BorderLayout.SOUTH);
     }
 
-    /* --------------------  MAIN  -------------------- */
+    /* -------------------- MAIN -------------------- */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(CourseGUI::showLogin);
     }
 }
 
-/* --------------------  CUSTOM COMPONENTS  -------------------- */
+/* -------------------- CUSTOM COMPONENTS -------------------- */
 class JTextFieldWithPlaceholder extends JTextField {
     private final String placeholder;
     JTextFieldWithPlaceholder(String placeholder) { this.placeholder = placeholder; }
